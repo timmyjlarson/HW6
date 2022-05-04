@@ -1,8 +1,6 @@
 import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
-
 
 
 /**
@@ -214,10 +212,90 @@ public class ColoredGraph {
 	* @return an Integer representing the length of the shortest valid colored path from start to t. Null if none exists.
 	* 
 	*/
-	public Integer coloredMaze(int start, int end)
-	{
+	public Integer coloredMaze(int start, int end) {
 		//YOUR CODE HERE
-		return -1;
+		Integer minLength = null;
+		GraphNode startNode = findNode(start);
+		GraphNode endNode = findNode(end);
+		if(startNode!=endNode) {
+			for (Edge edge : startNode.edges) {
+				if (edge.color == "red" && startNode == edge.u) {
+					minLength = yellowTransversal(end, edge.v, endNode);
+					if (minLength != null) {
+						return minLength + 1;
+					}
+				} else if (edge.color == "red" && startNode == edge.v) {
+					minLength = yellowTransversal(end, edge.u, endNode);
+					if (minLength != null) {
+						return minLength + 1;
+					}
+				}
+			}
+		}
+		return minLength;
+	}
+	private Integer redTransversal(int end, GraphNode startNode, GraphNode endNode) {
+		Integer minLength;
+		if(startNode!=endNode) {
+			for (Edge edge : startNode.edges) {
+				if (edge.color == "red" && startNode == edge.u) {
+					minLength = yellowTransversal(end, edge.v, endNode);
+					if (minLength != null) {
+						return minLength + 1;
+					}
+				} else if (edge.color == "red" && startNode == edge.v) {
+					minLength = yellowTransversal(end, edge.u, endNode);
+					if (minLength != null) {
+						return minLength + 1;
+					}
+				}
+			}
+		}else {
+			return 0;
+		}
+		return null;
+	}
+	private Integer yellowTransversal(int end, GraphNode startNode, GraphNode endNode) {
+		Integer minLength;
+		if(startNode!=endNode) {
+			for (Edge edge : startNode.edges) {
+				if (edge.color == "yellow" && startNode == edge.u) {
+					minLength = blueTransversal(end, edge.v, endNode);
+					if (minLength != null) {
+						return minLength + 1;
+					}
+				} else if (edge.color == "yellow" && startNode == edge.v) {
+					minLength = blueTransversal(end, edge.u, endNode);
+					if (minLength != null) {
+						return minLength + 1;
+					}
+				}
+			}
+		}else {
+			return 0;
+		}
+		return null;
+	}
+	private Integer blueTransversal(int end, GraphNode startNode, GraphNode endNode) {
+		Integer minLength;
+		if(startNode!=endNode) {
+			for (Edge edge : startNode.edges) {
+				if (edge.color == "blue" && startNode == edge.u) {
+					minLength = redTransversal(end, edge.v, endNode);
+					if (minLength != null) {
+						return minLength + 1;
+					}
+				} else if (edge.color == "blue" && startNode == edge.v) {
+					minLength = redTransversal(end, edge.u, endNode);
+					if (minLength != null) {
+						return minLength + 1;
+					}
+				}
+			}
+		}else {
+			return 0;
+		}
+		return null;
 	}
 
 
