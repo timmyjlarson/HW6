@@ -215,19 +215,30 @@ public class ColoredGraph {
 	public Integer coloredMaze(int start, int end) {
 		//YOUR CODE HERE
 		Integer minLength = null;
+		Integer currentLength;
 		GraphNode startNode = findNode(start);
 		GraphNode endNode = findNode(end);
 		if(startNode!=endNode) {
 			for (Edge edge : startNode.edges) {
 				if (edge.color == "red" && startNode == edge.u) {
-					minLength = yellowTransversal(end, edge.v, endNode);
-					if (minLength != null) {
-						return minLength + 1;
+					currentLength = yellowTransversal(end, edge.v, endNode);
+					if(currentLength!=null) {
+						currentLength++;
+					}
+					if(minLength==null) {
+						minLength=currentLength;
+					}else if(currentLength!=null && minLength>currentLength) {
+						minLength=currentLength;
 					}
 				} else if (edge.color == "red" && startNode == edge.v) {
-					minLength = yellowTransversal(end, edge.u, endNode);
-					if (minLength != null) {
-						return minLength + 1;
+					currentLength = yellowTransversal(end, edge.u, endNode);
+					if(currentLength!=null) {
+						currentLength++;
+					}
+					if(minLength==null) {
+						minLength=currentLength;
+					}else if(currentLength!=null && minLength>currentLength) {
+						minLength=currentLength;
 					}
 				}
 			}
@@ -235,67 +246,100 @@ public class ColoredGraph {
 		return minLength;
 	}
 	private Integer redTransversal(int end, GraphNode startNode, GraphNode endNode) {
-		Integer minLength;
+		Integer minLength = null;
+		Integer currentLength;
 		if(startNode!=endNode) {
 			for (Edge edge : startNode.edges) {
 				if (edge.color == "red" && startNode == edge.u) {
-					minLength = yellowTransversal(end, edge.v, endNode);
-					if (minLength != null) {
-						return minLength + 1;
+					currentLength = yellowTransversal(end, edge.v, endNode);
+					if(currentLength!=null) {
+						currentLength++;
+					}
+					if(minLength==null) {
+						minLength=currentLength;
+					}else if(currentLength!=null && minLength>currentLength) {
+						minLength=currentLength;
 					}
 				} else if (edge.color == "red" && startNode == edge.v) {
-					minLength = yellowTransversal(end, edge.u, endNode);
-					if (minLength != null) {
-						return minLength + 1;
+					currentLength = yellowTransversal(end, edge.u, endNode);
+					if(currentLength!=null) {
+						currentLength++;
+					}
+					if(minLength==null) {
+						minLength=currentLength;
+					}else if(currentLength!=null && minLength>currentLength) {
+						minLength=currentLength;
 					}
 				}
 			}
 		}else {
 			return 0;
 		}
-		return null;
+		return minLength;
 	}
 	private Integer yellowTransversal(int end, GraphNode startNode, GraphNode endNode) {
-		Integer minLength;
+		Integer minLength = null;
+		Integer currentLength;
 		if(startNode!=endNode) {
 			for (Edge edge : startNode.edges) {
 				if (edge.color == "yellow" && startNode == edge.u) {
-					minLength = blueTransversal(end, edge.v, endNode);
-					if (minLength != null) {
-						return minLength + 1;
+					currentLength = blueTransversal(end, edge.v, endNode);
+					if(currentLength!=null) {
+						currentLength++;
+					}
+					if(minLength==null) {
+						minLength=currentLength;
+					}else if(currentLength!=null && minLength>currentLength) {
+						minLength=currentLength;
 					}
 				} else if (edge.color == "yellow" && startNode == edge.v) {
-					minLength = blueTransversal(end, edge.u, endNode);
-					if (minLength != null) {
-						return minLength + 1;
+					currentLength = blueTransversal(end, edge.u, endNode);
+					if(currentLength!=null) {
+						currentLength++;
+					}
+					if(minLength==null) {
+						minLength=currentLength;
+					}else if(currentLength!=null && minLength>currentLength) {
+						minLength=currentLength;
 					}
 				}
 			}
 		}else {
 			return 0;
 		}
-		return null;
+		return minLength;
 	}
 	private Integer blueTransversal(int end, GraphNode startNode, GraphNode endNode) {
-		Integer minLength;
+		Integer minLength = null;
+		Integer currentLength;
 		if(startNode!=endNode) {
 			for (Edge edge : startNode.edges) {
 				if (edge.color == "blue" && startNode == edge.u) {
-					minLength = redTransversal(end, edge.v, endNode);
-					if (minLength != null) {
-						return minLength + 1;
+					currentLength = redTransversal(end, edge.v, endNode);
+					if(currentLength!=null) {
+						currentLength++;
+					}
+					if(minLength==null) {
+						minLength=currentLength;
+					}else if(currentLength!=null && minLength>currentLength) {
+						minLength=currentLength;
 					}
 				} else if (edge.color == "blue" && startNode == edge.v) {
-					minLength = redTransversal(end, edge.u, endNode);
-					if (minLength != null) {
-						return minLength + 1;
+					currentLength = redTransversal(end, edge.u, endNode);
+					if(currentLength!=null) {
+						currentLength++;
+					}
+					if(minLength==null) {
+						minLength=currentLength;
+					}else if(currentLength!=null && minLength>currentLength) {
+						minLength=currentLength;
 					}
 				}
 			}
 		}else {
 			return 0;
 		}
-		return null;
+		return minLength;
 	}
 
 
